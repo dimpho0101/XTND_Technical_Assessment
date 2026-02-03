@@ -1,0 +1,20 @@
+@XTND_Technical_Assessment_HostAddress = http://localhost:5149
+
+### Create a new user
+POST {{XTND_Technical_Assessment_HostAddress}}/api/users
+Content-Type: application/json
+
+{
+  "displayName": "John Doe"
+}
+
+###
+
+### Create a new task (use the userId from the user creation response above)
+POST {{XTND_Technical_Assessment_HostAddress}}/api/tasks
+Content-Type: application/json
+
+{
+  "title": "My First Task",
+  "taskUserId": "550e8400-e29b-41d4-a716-446655440000"
+}
