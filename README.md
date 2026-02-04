@@ -19,6 +19,11 @@ XTND Task Management API is a full-featured REST API for managing users and thei
 ✅ Professional Swagger/OpenAPI documentation  
 ✅ PostgreSQL database with EF Core migrations  
 
+### System Architecture Overview
+<img width="2204" height="4484" alt="image" src="https://github.com/user-attachments/assets/72636b7f-e7f4-4946-8aee-94b31a3b4669" />
+
+
+
 ## Prerequisites
 
 ### Required
