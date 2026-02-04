@@ -16,5 +16,78 @@ Content-Type: application/json
 
 {
   "title": "My First Task",
-  "taskUserId": "550e8400-e29b-41d4-a716-446655440000"
+  "taskUserId": 1
 }
+
+###
+
+### Get task by ID
+GET {{XTND_Technical_Assessment_HostAddress}}/api/tasks/1
+
+###
+
+### Get user by ID
+GET {{XTND_Technical_Assessment_HostAddress}}/api/users/1
+
+###
+
+### Update task (TaskStatusId: 1=Backlog, 2=In Progress, 3=Completed)
+PUT {{XTND_Technical_Assessment_HostAddress}}/api/tasks/1
+Content-Type: application/json
+
+{
+  "title": "Updated Task Title",
+  "taskStatusId": 2
+}
+
+###
+
+### Get all tasks with pagination (default: offset=0, limit=10)
+GET {{XTND_Technical_Assessment_HostAddress}}/api/tasks
+
+###
+
+### Get all tasks with custom pagination (offset=0, limit=5)
+GET {{XTND_Technical_Assessment_HostAddress}}/api/tasks?offset=0&limit=5
+
+###
+
+### Get page 2 (next 10 tasks)
+GET {{XTND_Technical_Assessment_HostAddress}}/api/tasks?offset=10&limit=10
+
+###
+
+### Delete task by ID
+DELETE {{XTND_Technical_Assessment_HostAddress}}/api/tasks/1
+
+###
+
+### Delete user by ID (will fail if user has tasks)
+DELETE {{XTND_Technical_Assessment_HostAddress}}/api/users/1
+
+###
+
+### Get all tasks assigned to a specific user (with pagination)
+GET {{XTND_Technical_Assessment_HostAddress}}/api/tasks/user/1
+
+###
+
+### Get all tasks assigned to a user with custom pagination (offset=0, limit=5)
+GET {{XTND_Technical_Assessment_HostAddress}}/api/tasks/user/1?offset=0&limit=5
+
+GET {{XTND_Technical_Assessment_HostAddress}}/api/tasks/filter?userDisplayName=John&statusId=2
+
+###
+
+### Filter tasks - By user display name with date range
+GET {{XTND_Technical_Assessment_HostAddress}}/api/tasks/filter?userDisplayName=Doe&fromDate=2026-02-01&toDate=2026-02-28
+
+###
+
+### Filter tasks - All filters including user display name
+GET {{XTND_Technical_Assessment_HostAddress}}/api/tasks/filter?userDisplayName=John&statusId=2&fromDate=2026-02-01&toDate=2026-02-28&offset=0&limit=10
+
+
+
+
+

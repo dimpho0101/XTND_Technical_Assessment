@@ -1,16 +1,21 @@
 ﻿namespace XTND_Technical_Assessment.Domain;
 
+using System.ComponentModel.DataAnnotations.Schema;
+
 public class TaskItem
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public string Title { get; set; } = "";
 
-    // who owns/created/assigned (you can rename later)
-    public Guid TaskUserId { get; set; }
+    public int TaskUserId { get; set; }
+
+    [ForeignKey(nameof(TaskUserId))]
     public TaskUser? TaskUser { get; set; }
 
-    // timestamps
+    public int TaskStatusId { get; set; }
+    public TaskItemStatus? TaskStatus { get; set; }
+
     public DateTime TaskCreatedAtUtc { get; set; }
     public DateTime TaskUpdatedAtUtc { get; set; }
 }

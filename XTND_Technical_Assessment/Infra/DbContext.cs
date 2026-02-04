@@ -10,6 +10,9 @@ public class AppDbContext : DbContext
     public DbSet<TaskUser> TaskUsers => Set<TaskUser>();
     public DbSet<TaskItem> TaskItems => Set<TaskItem>();
 
+    public DbSet<TaskItemStatus> TaskStatuses => Set<TaskItemStatus>();
+
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -43,7 +46,34 @@ public class AppDbContext : DbContext
              .WithMany(u => u.Tasks)
              .HasForeignKey(x => x.TaskUserId)
              .OnDelete(DeleteBehavior.Restrict);
+
+            b.HasOne(x => x.TaskStatus)
+             .WithMany()
+             .HasForeignKey(x => x.TaskStatusId)
+             .OnDelete(DeleteBehavior.Restrict);
         });
+
+        modelBuilder.Entity<TaskItemStatus>(b =>
+        {
+            b.ToTable("task_item_statuses");
+            b.HasKey(x => x.Id);
+
+            b.Property(x => x.Name)
+                .HasMaxLength(50)
+                .IsRequired();
+
+            b.Property(x => x.IsActive)
+                .IsRequired();
+
+            b.HasIndex(x => x.Name).IsUnique();
+
+            b.HasData(
+                new TaskItemStatus { Id = 1, Name = "Backlog", IsActive = true },
+                new TaskItemStatus { Id = 2, Name = "In Progress", IsActive = true },
+                new TaskItemStatus { Id = 3, Name = "Completed", IsActive = true }
+            );
+        });
+
     }
 
     public override int SaveChanges()
@@ -66,17 +96,16 @@ public class AppDbContext : DbContext
         {
             if (entry.State == EntityState.Added)
             {
-                // created + updated are SAME at insert time
+
                 entry.Entity.TaskCreatedAtUtc = utcNow;
                 entry.Entity.TaskUpdatedAtUtc = utcNow;
             }
 
             if (entry.State == EntityState.Modified)
             {
-                // only updated changes on update
+
                 entry.Entity.TaskUpdatedAtUtc = utcNow;
 
-                // protect created from being changed accidentally
                 entry.Property(x => x.TaskCreatedAtUtc).IsModified = false;
             }
         }
